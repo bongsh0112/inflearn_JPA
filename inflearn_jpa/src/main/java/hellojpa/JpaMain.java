@@ -15,17 +15,13 @@ public class JpaMain {
     tx.begin();
     try {
 
-//      Member findMember = em.find(Member.class, 1L);
-//      findMember.setName("HelloJPA"); // 값만 바꿨는데 어떻게...? jpa를 통해 갖고오면 jpa가 관리함. update 할 때 바뀐게 있는지 jpa가 관리하고 있다면 바꿔준다.
+      Member member = new Member();
+      member.setId(100L);
+      member.setName("HelloJPA");
 
-      List<Member> result = em.createQuery("select m from Member as m", Member.class)
-//              .setFirstResult(5)
-//              .setMaxResults(8) // 페이지네이션 짜기? -> 5번부터 8개 가져와
-              .getResultList();
-
-      for (Member m : result) {
-        System.out.println("member.name = " + m.getName());
-      }
+      System.out.println("BEFORE");
+      em.persist(member);
+      System.out.println("AFTER");
 
       tx.commit();
     } catch (Exception e) {
