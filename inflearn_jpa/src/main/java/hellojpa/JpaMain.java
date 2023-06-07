@@ -16,10 +16,7 @@ public class JpaMain {
     try {
 
       Member findMember = em.find(Member.class, 1L);
-      System.out.println(findMember.getId());
-      System.out.println(findMember.getName());
-
-      em.remove(findMember);
+      findMember.setName("HelloJPA"); // 값만 바꿨는데 어떻개...? jpa를 통해 갖고오면 jpa가 관리함. update 할 때 바뀐게 있는지 jpa가 관리하고 있다면 바꿔준다.
 
       tx.commit();
     } catch (Exception e) {
