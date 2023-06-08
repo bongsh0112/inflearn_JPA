@@ -15,24 +15,20 @@ public class JpaMain {
     tx.begin();
     try {
 
+      Team team = new Team();
+      team.setName("TeamA");
+      em.persist(team); // 영속상태가 되면 무조건 pk값이 세팅되고 영속상태가 됨.
+
       Member member = new Member();
-      member.setUsername("A");
-      Member member2 = new Member();
-      member2.setUsername("B");
-      Member member3 = new Member();
-      member3.setUsername("C");
+      member.setName("member1");
 
-      System.out.println("=====================");
-                            //             app에서 씀
-      em.persist(member); // DB SEQ = 1   |   1  // 1, 51
-      em.persist(member2); // DB SEQ = 51 |   2  // MEM에서 호출
-      em.persist(member3); // DB SEQ = 51 |   3  // MEM에서 호출
+      member.setTeamId(team.getId());
+      em.persist(member);
 
-      System.out.println("member.id = " + member.getId());
-      System.out.println("member.id = " + member2.getId());
-      System.out.println("member.id = " + member3.getId());
+      Member findMember = em.find(Member.class, member.getId());
 
-      System.out.println("=====================");
+      Long findTeamId = findMember.getTeamId();
+      Team findTeam = em.find(Team.class, findTeamId);
 
       tx.commit();
     } catch (Exception e) {
