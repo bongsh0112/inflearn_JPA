@@ -16,9 +16,23 @@ public class JpaMain {
     try {
 
       Member member = new Member();
-      member.setUsername("C");
+      member.setUsername("A");
+      Member member2 = new Member();
+      member2.setUsername("B");
+      Member member3 = new Member();
+      member3.setUsername("C");
 
-      em.persist(member);
+      System.out.println("=====================");
+                            //             app에서 씀
+      em.persist(member); // DB SEQ = 1   |   1  // 1, 51
+      em.persist(member2); // DB SEQ = 51 |   2  // MEM에서 호출
+      em.persist(member3); // DB SEQ = 51 |   3  // MEM에서 호출
+
+      System.out.println("member.id = " + member.getId());
+      System.out.println("member.id = " + member2.getId());
+      System.out.println("member.id = " + member3.getId());
+
+      System.out.println("=====================");
 
       tx.commit();
     } catch (Exception e) {
