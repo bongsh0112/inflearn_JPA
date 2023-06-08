@@ -15,10 +15,11 @@ public class JpaMain {
     tx.begin();
     try {
 
-      Member member = em.find(Member.class, 150L);
-      member.setName("AAAAA");
+      Member member1 = em.find(Member.class, 150L);
 
-      em.detach(member);
+      em.clear();
+
+      Member member2 = em.find(Member.class, 150L);
 
 //      em.persist(member);
 
@@ -34,4 +35,5 @@ public class JpaMain {
     emf.close();
 
   }
+
 }

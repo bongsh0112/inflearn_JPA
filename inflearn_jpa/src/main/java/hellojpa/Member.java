@@ -13,6 +13,7 @@ public class Member {
   private Long id;
 //  @Column(name = "NAME")
   private String name;
+  private int age;
 
   public Member() {
   }
