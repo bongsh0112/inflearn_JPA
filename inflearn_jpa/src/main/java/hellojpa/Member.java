@@ -7,7 +7,7 @@ import java.util.Date;
 @SequenceGenerator(
         name = "MEMBER_SEQ_GENERATOR",
         sequenceName = "MEMBER_SEQ", //매핑할 데이터베이스 시퀀스 이름
-        initialValue = 1, allocationSize = 1)
+        initialValue = 1, allocationSize = 50)
 //@Table(name = "MEMBER")
 public class Member {
 
