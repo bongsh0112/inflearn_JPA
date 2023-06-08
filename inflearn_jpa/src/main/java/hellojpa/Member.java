@@ -11,9 +11,8 @@ public class Member {
 
   @Id
   private Long id;
-//  @Column(name = "NAME")
+  @Column(name = "NAME", unique = true, length = 10)
   private String name;
-  private String gogo;
 
   public Member() {
   }
