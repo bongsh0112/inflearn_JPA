@@ -13,9 +13,7 @@ public class Member {
   private Long id;
 //  @Column(name = "NAME")
   private String name;
-  private int age;
-  private String email;
-  private char gender;
+  private String gogo;
 
   public Member() {
   }
