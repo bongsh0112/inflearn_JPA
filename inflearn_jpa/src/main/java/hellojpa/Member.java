@@ -39,6 +39,14 @@ public class Member {
     return username;
   }
 
+  public RoleType getRoleType() {
+    return roleType;
+  }
+
+  public void setRoleType(RoleType roleType) {
+    this.roleType = roleType;
+  }
+
   public void setUsername(String username) {
     this.username = username;
   }
