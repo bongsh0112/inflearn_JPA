@@ -16,26 +16,17 @@ public class JpaMain {
     tx.begin();
     try {
 
-      Team team = new Team();
-      team.setName("TeamA");
-      em.persist(team); // 영속상태가 되면 무조건 pk값이 세팅되고 영속상태가 됨.
-
       Member member = new Member();
       member.setName("member1");
-      member.setTeam(team);
       em.persist(member);
+
+      Team team = new Team();
+      team.setName("TeamA");
+      team.getMembers().add(member);
+      em.persist(team);
 
       em.flush();
       em.clear();
-
-      Member findMember = em.find(Member.class, member.getId());
-
-      Team findTeam = findMember.getTeam();
-      List<Member> members = findMember.getTeam().getMembers();
-
-      for (Member member1 : members) {
-        System.out.println("member1 = " + member1.getName());
-      }
 
       tx.commit();
     } catch (Exception e) {
