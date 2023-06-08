@@ -15,7 +15,7 @@ public class Member {
 
   private Integer age;
 
-  @Enumerated(EnumType.STRING)
+  @Enumerated(EnumType.ORDINAL)
   private RoleType roleType;
 
   @Temporal(TemporalType.TIMESTAMP)
