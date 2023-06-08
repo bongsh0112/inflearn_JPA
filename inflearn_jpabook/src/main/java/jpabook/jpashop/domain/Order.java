@@ -4,14 +4,19 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "ORDERS") // order가 예약어로 잡힌 db도 있기 때문
+@Table(name = "ORDERS")
 public class Order {
   @Id @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "ORDER_ID")
   private Long id;
+
   @Column(name = "MEMBER_ID")
   private Long memberId;
+
+//  private Member member; // 이렇게 쓰는 것이 객체지향적이지 않을까?
+
   private LocalDateTime orderDate;
+
   @Enumerated(EnumType.STRING)
   private OrderStatus status;
 

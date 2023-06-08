@@ -5,9 +5,10 @@ import javax.persistence.*;
 @Entity
 public class Member {
   @Id @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "MEMBER_ID") // 멤버변수명과 테이블 설계에서의 컬럼명이 다르면 적어준다
+  @Column(name = "MEMBER_ID")
   private Long id;
 
+  @Column(length = 10)
   private String names;
   private String city;
   private String street;
