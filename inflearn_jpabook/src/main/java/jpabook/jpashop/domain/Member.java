@@ -1,6 +1,8 @@
 package jpabook.jpashop.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Member {
@@ -14,8 +16,21 @@ public class Member {
   private String street;
   private String zipcode;
 
+  @OneToMany(mappedBy = "member")
+  // 특정 회원의 주문 내역을 보고싶으면 orders에 이미 외래키로 멤버 아이디가 있는 것을 이용하는 것이 좋은 설계
+  // 이렇게 멤버로부터 주문 내역을 찾는 것은 별로 좋지 않은 설계임. 연관관계를 잘 끊어내는 것이 좋은 설계다
+  private List<Order> orders = new ArrayList<>();
+
   public Member() {
 
+  }
+
+  public List<Order> getOrders() {
+    return orders;
+  }
+
+  public void setOrders(List<Order> orders) {
+    this.orders = orders;
   }
 
   public Long getId() {
