@@ -19,10 +19,9 @@ public class Member {
 //  @Column(name = "TEAM_ID")
 //  private Long teamId;
 
-  @ManyToOne // member 입장에서 team과는 다대일이므로 many to one
-  @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false )
+  @ManyToOne// member 입장에서 team과는 다대일이므로 many to one
+  @JoinColumn(name = "TEAM_ID")
   private Team team;
-
 
   public Team getTeam() {
     return team;
@@ -45,7 +44,11 @@ public class Member {
   }
 
   public void setName(String name) {
-
     this.name = name;
+  }
+
+  public void changeTeam(Team team) {
+    this.team = team;
+    team.getMembers().add(this);
   }
 }

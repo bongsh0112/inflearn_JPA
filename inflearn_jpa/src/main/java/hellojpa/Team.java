@@ -10,8 +10,7 @@ public class Team {
   @Id @GeneratedValue
   private Long id;
   private String name;
-  @OneToMany // 팀의 입장에서는 일대다이기 때문에 OneToMany
-  @JoinColumn(name = "TEAM_ID")
+  @OneToMany(mappedBy = "team") // 팀의 입장에서는 일대다이기 때문에 OneToMany
   private List<Member> members = new ArrayList<>();
 
   public void addMember(Member member) { // team->member 방향 편의 메소드
