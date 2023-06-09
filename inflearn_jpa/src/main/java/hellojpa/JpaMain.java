@@ -21,8 +21,8 @@ public class JpaMain {
 
       Member member = new Member();
       member.setName("member1");
-      member.changeTeam(team); // 이 때 team.getMembers().add(member);로 team에도 연관관계 세팅을 한 것!
       em.persist(member);
+      team.addMember(member); // team->member방향 편의 메소드
 
 //      team.getMembers().add(member);
 
