@@ -17,7 +17,6 @@ public class JpaMain {
     try {
       Team team = new Team();
       team.setName("TeamA");
-//      team.getMembers().add(member);
       em.persist(team);
 
       Member member = new Member();
@@ -25,9 +24,15 @@ public class JpaMain {
       member.setTeam(team);
       em.persist(member);
 
-
       em.flush();
       em.clear();
+
+      Team findTeam = em.find(Team.class, team.getId());
+      List<Member> members = findTeam.getMembers(); // 지연 로딩!!
+
+      for (Member m : members) {
+        System.out.println("m = " + m.getName());
+      }
 
       tx.commit();
     } catch (Exception e) {
