@@ -24,8 +24,11 @@ public class JpaMain {
       member.setTeam(team);
       em.persist(member);
 
-      em.flush();
-      em.clear();
+//      team.getMembers().add(member);
+//
+//      em.flush();
+//      em.clear();
+      // 이런식으로 하면 DB에는 반영되지 않아 밑의 sout에서 발견되는 것이 아무것도 없음!
 
       Team findTeam = em.find(Team.class, team.getId());
       List<Member> members = findTeam.getMembers(); // 지연 로딩!!
