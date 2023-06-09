@@ -3,7 +3,9 @@ package hellojpa;
 import org.hibernate.annotations.ManyToAny;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Member {
@@ -20,6 +22,7 @@ public class Member {
   @ManyToOne // member 입장에서 team과는 다대일이므로 many to one
   @JoinColumn(name = "TEAM_ID") // 관계할 때 조인하는 외래키 컬럼의 이름 넣어주기
   private Team team;
+
 
   public Team getTeam() {
     return team;

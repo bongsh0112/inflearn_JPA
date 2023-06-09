@@ -15,29 +15,17 @@ public class JpaMain {
     EntityTransaction tx = em.getTransaction();
     tx.begin();
     try {
-      Team team = new Team();
-      team.setName("TeamA");
-      em.persist(team);
-
       Member member = new Member();
       member.setName("member1");
+
       em.persist(member);
-      team.addMember(member); // team->member방향 편의 메소드
 
-//      team.getMembers().add(member);
+      Team team = new Team();
+      team.setName("teamA");
 
-      em.flush();
-      em.clear();
-       // 이런식으로 하면 DB에는 반영되지 않아 밑의 sout에서 발견되는 것이 아무것도 없음!
+      team.getMembers().add(member); //**
 
-      Team findTeam = em.find(Team.class, team.getId());
-      List<Member> members = findTeam.getMembers(); // 지연 로딩!!
-
-      System.out.println("==============");
-      for (Member m : members) {
-        System.out.println("members = " + members);
-      }
-      System.out.println("==============");
+      em.persist(team);
 
       tx.commit();
     } catch (Exception e) {
