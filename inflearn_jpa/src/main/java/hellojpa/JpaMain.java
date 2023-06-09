@@ -15,15 +15,16 @@ public class JpaMain {
     EntityTransaction tx = em.getTransaction();
     tx.begin();
     try {
+      Team team = new Team();
+      team.setName("TeamA");
+//      team.getMembers().add(member);
+      em.persist(team);
 
       Member member = new Member();
       member.setName("member1");
+      member.setTeam(team);
       em.persist(member);
 
-      Team team = new Team();
-      team.setName("TeamA");
-      team.getMembers().add(member);
-      em.persist(team);
 
       em.flush();
       em.clear();
