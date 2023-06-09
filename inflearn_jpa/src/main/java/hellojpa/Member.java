@@ -20,7 +20,7 @@ public class Member {
 //  private Long teamId;
 
   @ManyToOne // member 입장에서 team과는 다대일이므로 many to one
-  @JoinColumn(name = "TEAM_ID") // 관계할 때 조인하는 외래키 컬럼의 이름 넣어주기
+  @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false )
   private Team team;
 
 
