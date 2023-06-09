@@ -21,21 +21,23 @@ public class JpaMain {
 
       Member member = new Member();
       member.setName("member1");
-      member.setTeam(team);
+      member.changeTeam(team); // 이 때 team.getMembers().add(member);로 team에도 연관관계 세팅을 한 것!
       em.persist(member);
 
 //      team.getMembers().add(member);
-//
-//      em.flush();
-//      em.clear();
-      // 이런식으로 하면 DB에는 반영되지 않아 밑의 sout에서 발견되는 것이 아무것도 없음!
+
+      em.flush();
+      em.clear();
+       // 이런식으로 하면 DB에는 반영되지 않아 밑의 sout에서 발견되는 것이 아무것도 없음!
 
       Team findTeam = em.find(Team.class, team.getId());
       List<Member> members = findTeam.getMembers(); // 지연 로딩!!
 
+      System.out.println("==============");
       for (Member m : members) {
         System.out.println("m = " + m.getName());
       }
+      System.out.println("==============");
 
       tx.commit();
     } catch (Exception e) {

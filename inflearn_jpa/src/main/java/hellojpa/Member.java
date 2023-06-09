@@ -25,8 +25,10 @@ public class Member {
     return team;
   }
 
-  public void setTeam(Team team) {
+  public void changeTeam(Team team) { // setTeam이 아닌 changeTeam으로 로직을 표시함.
     this.team = team;
+    team.getMembers().add(this); //연관관계 편의 메소드
+
   }
 
   public Long getId() {
@@ -42,6 +44,7 @@ public class Member {
   }
 
   public void setName(String name) {
+
     this.name = name;
   }
 
