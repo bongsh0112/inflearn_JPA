@@ -35,7 +35,7 @@ public class JpaMain {
 
       System.out.println("==============");
       for (Member m : members) {
-        System.out.println("findTeam = " + findTeam); // 무한루프
+        System.out.println("members = " + members);
       }
       System.out.println("==============");
 
