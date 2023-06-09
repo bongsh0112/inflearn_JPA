@@ -16,7 +16,7 @@ public class Team {
   @OneToMany(mappedBy = "team") // 팀의 입장에서는 일대다이기 때문에 OneToMany. 관계를 맺는 반대편의 외래키를 표시함.
   private List<Member> members = new ArrayList<Member>();
 
-  public void addMember(Member member) { // team->member 방향 편의 메소드
+  public void addMember(Member member) { // team->member 방향 편의 메소프
     member.setTeam(this);
     members.add(member);
   }
@@ -45,5 +45,12 @@ public class Team {
     this.name = name;
   }
 
-
+  @Override
+  public String toString() {
+    return "Team{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", members=" + members +
+            '}';
+  } // 무한루프
 }
