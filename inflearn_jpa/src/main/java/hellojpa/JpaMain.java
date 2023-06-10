@@ -19,15 +19,6 @@ public class JpaMain {
       Item item = new Item();
       em.persist(item);
 
-      Album album = new Album();
-      em.persist(album);
-
-      Movie movie = new Movie();
-      em.persist(movie);
-
-      Book book = new Book();
-      em.persist(book);
-
       tx.commit();
     } catch (Exception e) {
       tx.rollback();
