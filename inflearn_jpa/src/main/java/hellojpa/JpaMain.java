@@ -16,24 +16,17 @@ public class JpaMain {
     EntityTransaction tx = em.getTransaction();
     tx.begin();
     try {
-      Team team = new Team();
-      team.setName("teamA");
-      em.persist(team);
+      Item item = new Item();
+      em.persist(item);
 
-      Member member = new Member();
-      member.setName("member1");
-      member.changeTeam(team);
-      em.persist(member);
+      Album album = new Album();
+      em.persist(album);
 
-      em.flush();
-      em.clear();
+      Movie movie = new Movie();
+      em.persist(movie);
 
-      Team findTeam = em.find(Team.class, team.getId());
-      List<Member> members = findTeam.getMembers(); 
-      
-      for (Member m : members) {
-        System.out.println("member = " + m.getName());
-      }
+      Book book = new Book();
+      em.persist(book);
 
       tx.commit();
     } catch (Exception e) {
