@@ -22,27 +22,23 @@ public class JpaMain {
       member1.setName("member1");
       em.persist(member1);
 
-      Member member2 = new Member();
-      member2.setName("member2");
-      em.persist(member2);
-
-      Member member3 = new Member();
-      member3.setName("member3");
-      em.persist(member3);
-
       em.flush();
       em.clear();
 
       Member refMember = em.getReference(Member.class, member1.getId());
       System.out.println("refMember.getClass() = " + refMember.getClass());
 
-      Member findMember = em.find(Member.class, member1.getId());
-      System.out.println("findMember.getClass() = " + findMember.getClass());
+      em.detach(refMember);
+      //em.close();
+      //em.clear();
+
+      System.out.println(refMember.getName());
 
       tx.commit();
 
     } catch (Exception e) {
       tx.rollback();
+      e.printStackTrace();
     } finally {
         em.close();
     }
