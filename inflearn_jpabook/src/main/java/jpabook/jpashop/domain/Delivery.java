@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Delivery { // Order와 일대일. Order에 외래키 있는 걸로.
+public class Delivery extends BaseEntity { // Order와 일대일. Order에 외래키 있는 걸로.
 
   @Id
   @GeneratedValue

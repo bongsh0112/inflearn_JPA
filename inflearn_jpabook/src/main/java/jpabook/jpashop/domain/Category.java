@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Category { // Item과 다대다
+public class Category extends BaseEntity { // Item과 다대다
 
   @Id @GeneratedValue
   private Long id;

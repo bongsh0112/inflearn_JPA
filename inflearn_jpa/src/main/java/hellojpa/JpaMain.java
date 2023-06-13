@@ -17,13 +17,9 @@ public class JpaMain {
     EntityTransaction tx = em.getTransaction();
     tx.begin();
     try {
-      Member member = new Member();
-      member.setCreatedBy("Bong");
-      member.setName("User1");
-      member.setCreatedDate(LocalDateTime.now());
 
-      em.flush(); // 영속성 컨텍스트에 있는 것을 db에 날리고
-      em.clear(); // 영속성 컨텍스트에 있는 것을 모두 삭제하니까
+      Member member = em.find(Member.class, 1L);
+      printMemberAndTeam(member);
 
       tx.commit();
 
@@ -35,6 +31,14 @@ public class JpaMain {
 
     emf.close();
 
+  }
+
+  private static void printMemberAndTeam(Member member) {
+    String username = member.getName();
+    System.out.println("username = " + username);
+
+    Team team = member.getTeam();
+    System.out.println("team.getName() = " + team.getName());
   }
 
 }
