@@ -3,12 +3,13 @@ package hellojpa;
 import org.hibernate.annotations.ManyToAny;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Member {
+public class Member extends BaseEntity{
 
   @Id @GeneratedValue
   private Long id;
@@ -33,6 +34,12 @@ public class Member {
 
   @OneToMany(mappedBy = "member")
   private List<MemberProduct> memberProducts = new ArrayList<>();
+
+  // 모든 파일에 들어가야 하는 것들... 을 DBA가 정해주면 적어주어야한다;; -> BaseEntity를 만들어 SuperClass 상속하기
+  /*private String createdBy;
+  private LocalDateTime createdDate;
+  private String lastModifiedBy;
+  private LocalDateTime lastModifiedDate;*/
 
 
   public Team getTeam() {
