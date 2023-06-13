@@ -18,20 +18,32 @@ public class JpaMain {
     tx.begin();
     try {
 
-      Member member = new Member();
-      member.setName("hello");
+      Member member1 = new Member();
+      member1.setName("member1");
+      em.persist(member1);
 
-      em.persist(member);
+      Member member2 = new Member();
+      member2.setName("member2");
+      em.persist(member2);
 
+      Member member3 = new Member();
+      member3.setName("member3");
+      em.persist(member3);
+
+      em.flush();
+      em.clear();
+
+      Member m1 = em.find(Member.class, member1.getId());
+      Member m2 = em.find(Member.class, member2.getId());
+      Member m3 = em.getReference(Member.class, member3.getId());
+
+      System.out.println("m1 == m2 : " + (m1.getClass() == m2.getClass()));
+//      System.out.println("m1 == m3 : " + (m1.getClass() == m3.getClass()));
+      System.out.println("m1 == m3 : " + (m3 instanceof Member) );
       em.flush();
       em.clear(); // 영속성 컨텍스트 초기화. 거의 애플리케이션 처음 띄운것과 마찬가지..
 
-//      Member findMember = em.find(Member.class, member.getId());
-      Member findMember = em.getReference(Member.class, member.getId());
-      System.out.println("findMember.class = " + findMember.getClass());
-      System.out.println("findMember.getId() = " + findMember.getId());
-      System.out.println("findMember.getName() = " + findMember.getName());
-      System.out.println("findMember.getName() = " + findMember.getName());
+
 
       tx.commit();
 
