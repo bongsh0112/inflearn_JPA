@@ -33,14 +33,11 @@ public class JpaMain {
       em.flush();
       em.clear();
 
-      Member m1 = em.find(Member.class, member1.getId());
-      Member m2 = em.find(Member.class, member2.getId());
-      Member m3 = em.getReference(Member.class, member3.getId());
-      Member m4 = em.getReference(Member.class, member1.getId());
+      Member refMember = em.getReference(Member.class, member1.getId());
+      System.out.println("refMember.getClass() = " + refMember.getClass());
 
-      System.out.println("m1 = " + m1.getClass());
-      System.out.println("m3 = " + m3.getClass());
-      System.out.println("m4 = " + m4.getClass());
+      Member findMember = em.find(Member.class, member1.getId());
+      System.out.println("findMember.getClass() = " + findMember.getClass());
 
       tx.commit();
 
