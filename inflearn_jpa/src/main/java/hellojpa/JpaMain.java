@@ -1,5 +1,7 @@
 package hellojpa;
 
+import org.hibernate.Hibernate;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -26,7 +28,8 @@ public class JpaMain {
       em.clear();
 
       Member refMember = em.getReference(Member.class, member1.getId());
-      System.out.println("refMember.getClass() = " + refMember.getClass());
+      System.out.println("refMember = " + refMember.getClass().getName()); // 프록시 클래스 확인 방법
+      Hibernate.initialize(refMember); // 프록시 객체 강제 초기화
 
       em.detach(refMember);
       //em.close();
