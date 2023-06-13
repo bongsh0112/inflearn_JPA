@@ -36,14 +36,11 @@ public class JpaMain {
       Member m1 = em.find(Member.class, member1.getId());
       Member m2 = em.find(Member.class, member2.getId());
       Member m3 = em.getReference(Member.class, member3.getId());
+      Member m4 = em.getReference(Member.class, member1.getId());
 
-      System.out.println("m1 == m2 : " + (m1.getClass() == m2.getClass()));
-//      System.out.println("m1 == m3 : " + (m1.getClass() == m3.getClass()));
-      System.out.println("m1 == m3 : " + (m3 instanceof Member) );
-      em.flush();
-      em.clear(); // 영속성 컨텍스트 초기화. 거의 애플리케이션 처음 띄운것과 마찬가지..
-
-
+      System.out.println("m1 = " + m1.getClass());
+      System.out.println("m3 = " + m3.getClass());
+      System.out.println("m4 = " + m4.getClass());
 
       tx.commit();
 
