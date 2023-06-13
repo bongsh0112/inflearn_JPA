@@ -1,5 +1,6 @@
 package jpabook.jpashop;
 
+import jpabook.jpashop.domain.Book;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderItem;
 
@@ -18,13 +19,11 @@ public class JpaMain {
     tx.begin();
     try {
 
-      Order order = new Order();
-      em.persist(order);
+      Book book = new Book();
+      book.setName("JPA");
+      book.setAuthor("김영한");
 
-      OrderItem orderItem = new OrderItem();
-      orderItem.setOrder(order);
-
-      em.persist(orderItem); // 굳이 order에 orderitem 추가해서 양방향 할 필요없이 이렇게 해도 됨!
+      em.persist(book);
 
       tx.commit();
     } catch (Exception e) {
