@@ -18,8 +18,18 @@ public class JpaMain {
     tx.begin();
     try {
 
-      Member member = em.find(Member.class, 1L);
-      printMemberAndTeam(member);
+      Member member = new Member();
+      member.setName("hello");
+
+      em.persist(member);
+
+      em.flush();
+      em.clear(); // 영속성 컨텍스트 초기화. 거의 애플리케이션 처음 띄운것과 마찬가지..
+
+//      Member findMember = em.find(Member.class, member.getId());
+      Member findMember = em.getReference(Member.class, member.getId());
+      System.out.println("findMember.getId() = " + findMember.getId());
+      System.out.println("findMember.getName() = " + findMember.getName());
 
       tx.commit();
 

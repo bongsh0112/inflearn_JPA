@@ -24,10 +24,6 @@ public class Member extends BaseEntity{
   @JoinColumn(name = "TEAM_ID")
   private Team team;
 
-  @OneToOne
-  @JoinColumn(name = "LOCKER_ID")
-  private Locker locker;
-
   @ManyToMany
   @JoinTable(name = "MEMBER_PRODUCT")
   private List<Product> products = new ArrayList<>();
@@ -64,10 +60,5 @@ public class Member extends BaseEntity{
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public void changeTeam(Team team) {
-    this.team = team;
-    team.getMembers().add(this);
   }
 }
