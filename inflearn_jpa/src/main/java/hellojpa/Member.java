@@ -20,7 +20,7 @@ public class Member extends BaseEntity{
 //  @Column(name = "TEAM_ID")
 //  private Long teamId;
 
-  @ManyToOne// member 입장에서 team과는 다대일이므로 many to one
+  @ManyToOne(fetch = FetchType.LAZY) // lazy fetch 타입일 때 프록시 객체를 조회함. -> 멤버 클래스만 디비에서 조회
   @JoinColumn(name = "TEAM_ID")
   private Team team;
 

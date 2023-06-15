@@ -20,22 +20,25 @@ public class JpaMain {
     tx.begin();
     try {
 
-      Member member1 = new Member();
-      member1.setName("member1");
-      em.persist(member1);
+      Team team = new Team();
+      team.setName("Team1");
+      em.persist(team);
+
+      Member member = new Member();
+      member.setName("member1");
+      member.setTeam(team);
+      em.persist(member);
 
       em.flush();
       em.clear();
 
-      Member refMember = em.getReference(Member.class, member1.getId());
-      System.out.println("refMember = " + refMember.getClass().getName()); // 프록시 클래스 확인 방법
-      Hibernate.initialize(refMember); // 프록시 객체 강제 초기화
+      Member findMember = em.find(Member.class, member.getId());
 
-      em.detach(refMember);
-      //em.close();
-      //em.clear();
+      System.out.println("member.getTeam().getClass() = " + findMember.getTeam().getClass());
 
-      System.out.println(refMember.getName());
+      System.out.println("==================");
+      findMember.getTeam().getName();
+      System.out.println("==================");
 
       tx.commit();
 
