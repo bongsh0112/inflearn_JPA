@@ -10,7 +10,7 @@ public class OrderItem extends BaseEntity {
   @Column(name = "ORDER_ITEM_ID")
   private Long id;
 
-  @ManyToOne(fetch = LAZY)
+  @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "ORDER_ID")
   private Order order;
 

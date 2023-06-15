@@ -18,7 +18,7 @@ public class Order extends BaseEntity {
 //  @Column(name = "MEMBER_ID")
 //  private Long memberId;
 
-  @ManyToOne(fetch = LAZY) // 나를 주문한 회원은 하나!
+  @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL) // 나를 주문한 회원은 하나!
   @JoinColumn(name="MEMBER_ID")
   private Member member;
 
