@@ -14,7 +14,7 @@ public class Team {
   private List<Member> members = new ArrayList<>();
 
   public void addMember(Member member) { // team->member 방향 편의 메소드
-    member.setTeam(this);
+//    member.setTeam(this);
     members.add(member);
   }
 

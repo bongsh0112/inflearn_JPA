@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class JpaMain {
   public static void main(String[] args) {
@@ -17,22 +18,33 @@ public class JpaMain {
     tx.begin();
     try {
 
-      Address address = new Address("city", "street", "10000");
+      Member member = new Member();
+      member.setName("member1");
+      member.setHomeAddress(new Address("city1", "street", "zipcode"));
 
-      Member member1 = new Member();
-      member1.setName("member1");
-      member1.setAddress(address);
-      em.persist(member1);
+      member.getFavoriteFoods().add("치킨");
+      member.getFavoriteFoods().add("족발");
+      member.getFavoriteFoods().add("피자");
 
-      Address copyAddress = new Address(address.getCity(), address.getStreet(), address.getZipcode());
+      member.getAddressHistory().add(new Address("old1", "street", "zipcode"));
+      member.getAddressHistory().add(new Address("old2", "street", "zipcode"));
 
-      Member member2 = new Member();
-      member2.setName("member2");
-      member2.setAddress(copyAddress);
-      em.persist(member2);
+      em.persist(member);
 
-      member1.getAddress().setCity("newCity"); // 불가능!!! setter를 없앴기 때문
+      em.flush();
+      em.clear();
 
+      Member findMember = em.find(Member.class, member.getId());
+
+      List<Address> addressHistory = findMember.getAddressHistory();
+      for (Address address : addressHistory) {
+        System.out.println("address = " + address.getCity());
+      }
+
+      Set<String> favoriteFoods = findMember.getFavoriteFoods();
+      for (String favoriteFood : favoriteFoods) {
+        System.out.println("foods = " + favoriteFood);
+      }
 
       tx.commit();
 
