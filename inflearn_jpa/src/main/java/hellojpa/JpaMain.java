@@ -2,10 +2,7 @@ package hellojpa;
 
 import org.hibernate.Hibernate;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +29,12 @@ public class JpaMain {
       em.flush();
       em.clear();
 
-      Member findMember = em.find(Member.class, member.getId());
+//      Member findMember = em.find(Member.class, member.getId());
 
-      System.out.println("member.getTeam().getClass() = " + findMember.getTeam().getClass());
+      List<Member> m = em.createQuery("select m from Member m", Member.class)
+              .getResultList();
 
-      System.out.println("==================");
-      findMember.getTeam().getName();
-      System.out.println("==================");
+//      System.out.println("member.getTeam().getClass() = " + findMember.getTeam().getClass());
 
       tx.commit();
 
