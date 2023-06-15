@@ -31,7 +31,7 @@ public class JpaMain {
       member2.setAddress(copyAddress);
       em.persist(member2);
 
-      member1.getAddress().setCity("newCity");
+      member1.getAddress().setCity("newCity"); // 불가능!!! setter를 없앴기 때문
 
 
       tx.commit();
