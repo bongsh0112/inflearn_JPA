@@ -28,10 +28,14 @@ public class Member extends BaseEntity {
   @Column(name = "FOOD_NAME") // 임베디드 타입이 아니고 정의한게 아니라서...예외적
   private Set<String> favoriteFoods = new HashSet<>();
 
-  @ElementCollection
-  @CollectionTable(name = "ADDRESS_HISTORY", joinColumns =
-  @JoinColumn(name = "MEMBER_ID"))
-  private List<Address> addressHistory = new ArrayList<>();
+//  @ElementCollection
+//  @CollectionTable(name = "ADDRESS_HISTORY", joinColumns =
+//  @JoinColumn(name = "MEMBER_ID"))
+//  private List<Address> addressHistory = new ArrayList<>();
+
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "MEMBER_ID")
+  private List<AddressEntity> addressHistory = new ArrayList<>();
 
   public Long getId() {
     return id;
