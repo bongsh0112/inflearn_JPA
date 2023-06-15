@@ -1,9 +1,6 @@
 package jpabook.jpashop.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class Delivery extends BaseEntity { // Order와 일대일. Order에 외래키 있는 걸로.
@@ -12,7 +9,7 @@ public class Delivery extends BaseEntity { // Order와 일대일. Order에 외�
   @GeneratedValue
   private Long id;
 
-  @OneToOne(mappedBy = "delivery")
+  @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY) // OneToOne 신경쓰기!
   private Order order;
 
   private String city;

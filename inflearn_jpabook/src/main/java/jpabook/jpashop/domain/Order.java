@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.*;
+
 @Entity
 @Table(name = "ORDERS")
 public class Order extends BaseEntity {
@@ -16,14 +18,14 @@ public class Order extends BaseEntity {
 //  @Column(name = "MEMBER_ID")
 //  private Long memberId;
 
-  @ManyToOne // 나를 주문한 회원은 하나!
+  @ManyToOne(fetch = LAZY) // 나를 주문한 회원은 하나!
   @JoinColumn(name="MEMBER_ID")
   private Member member;
 
   @OneToMany(mappedBy = "order")
   private List<OrderItem> orderItems= new ArrayList<>();
 
-  @OneToOne
+  @OneToOne(fetch = LAZY)
   @JoinColumn(name = "DELIVERY_ID")
   private Delivery delivery;
 

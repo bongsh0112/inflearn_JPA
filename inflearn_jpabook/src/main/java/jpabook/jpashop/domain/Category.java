@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.*;
+
 @Entity
 public class Category extends BaseEntity { // Item과 다대다
 
@@ -12,11 +14,11 @@ public class Category extends BaseEntity { // Item과 다대다
 
   private String name;
 
-  @ManyToOne
+  @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "PARENT_ID")
   private Category parent;
 
-  @OneToMany(mappedBy = "parent")
+  @OneToMany(mappedBy = "parent") // 기본이 LAZY이므로 신경쓰지 않아도 됨.
   private List<Category> child = new ArrayList<>();
   // 양방향으로 만들어서 child까지 만들 수 있음. 위에꺼랑 셀프로 잡혔다.
   // 카테고리가 쭉 내려가서 셀프로 잡힘.
