@@ -9,6 +9,8 @@ public class Member {
   private Long id;
   private String username;
   private int age;
+  @Enumerated(EnumType.STRING)
+  private MemberType type;
 
   public void changeTeam(Team team) {
     this.team = team;
@@ -49,5 +51,18 @@ public class Member {
 
   public void setTeam(Team team) {
     this.team = team;
+  }
+
+  public void setType(MemberType type) {
+    this.type = type;
+  }
+
+  @Override
+  public String toString() {
+    return "Member{" +
+            "id=" + id +
+            ", username='" + username + '\'' +
+            ", age=" + age +
+            '}';
   }
 }
