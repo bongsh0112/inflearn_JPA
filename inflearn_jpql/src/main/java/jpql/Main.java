@@ -16,9 +16,14 @@ public class Main {
       member.setUsername("member1");
       em.persist(member);
 
-      TypedQuery<Member> query1 = em.createQuery("select m from Member m", Member.class); // 반환 타입 Member로 명확
-      TypedQuery<String> query2 = em.createQuery("select m.username from Member m", String.class); // 반환 타입 String으로 명확
-      Query<Member> query3 = em.createQuery("select m.username, m.age from Member m");
+//      TypedQuery<Member> query1 = em.createQuery("select m from Member m where m.username = :username", Member.class);
+//      query1.setParameter("username", "member1");
+//      Member singleResult = query1.getSingleResult();
+
+      Member result = em.createQuery("select m from Member m where m.username = :username", Member.class)
+                .setParameter("username", "member1")
+                .getSingleResult();
+      System.out.println("singleResult = " + result.getUsername());
 
       tx.commit();
     } catch (Exception e) {
