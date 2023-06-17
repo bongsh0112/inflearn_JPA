@@ -41,18 +41,16 @@ public class Main {
       em.clear();
 
 //      String query = "select m from Member m"; // fetch join 사용 전
-      String query = "select m from Member m join fetch m.team"; // fetch join 사용시 -> 팀은 프록시가 아니라 실제 Team을 가져옴!
+      String query = "select t from Team t join fetch t.members"; // fetch join 사용시 -> 팀은 프록시가 아니라 실제 Team을 가져옴!
 
-      List<Member> result = em.createQuery(query, Member.class)
+      List<Team> result = em.createQuery(query, Team.class)
               .getResultList();
 
-      for(Member m : result) {
-        System.out.println("m = " + m.getUsername() + " " + m.getTeam().getName());
-        // Team은 LAZY에 의해 프록시로 들어오게 되고 결국 지연 로딩. 실제로 getName을 호출할 때 마다 DB에 쿼리를 날림.
-        // member1, TeamA(SQL)
-        // member2, TeamA(1차캐시)
-        // member3, TeamB(SQL)
-
+      for(Team t : result) {
+        System.out.println("team = " + t.getName() + " members = " + t.getMembers().size());
+        for (Member member : t.getMembers()) {
+          System.out.println(" -> member = " + member);
+        }
         // 만약 회원이 100명이라면 최악의 경우 쿼리가 100번이 나갈 것.. N + 1
       }
       tx.commit();
