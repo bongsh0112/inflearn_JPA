@@ -40,29 +40,14 @@ public class Main {
       em.flush();
       em.clear();
 
-      String query = "select m from Member m where m = :member"; // 엔티티 자체를 사용하기 - 엔티티 자체를 사용하여 기본 키 뽑아오게 하기
-
-      Member findMember = em.createQuery(query, Member.class)
-              .setParameter("member", member1)
-              .getSingleResult();
-
-      String query2 = "select m from Member m where m.id = :memberId"; // 기본 키를 사용하기 - 엔티티의 식별자인 기본 키 직접 사용
-
-      Member findMember2 = em.createQuery(query2, Member.class)
-              .setParameter("memberId", member1.getId())
-              .getSingleResult();
-
-      String query3 = "select m from Member m where m.team = :team"; // 외래 키를 사용하기 - 연관관계에 있는 엔티티의 외래 키 사용하여 조인 비슷하게 쓰기
-
-      List<Member> findMember3 = em.createQuery(query3, Member.class)
-              .setParameter("team", teamA)
-              .getResultList();
-
-      System.out.println("findMember = " + findMember);
-      System.out.println("findMember2 = " + findMember2);
-      for (Member m : findMember3) {
-        System.out.println("findMember3 = " + m.getUsername());
+      List<Member> findMember = em.createNamedQuery("Member.findByUserName", Member.class)
+              .setParameter("username", member1)
+              .getResultList(); // NamedQuery 사용
+      
+      for (Member m : findMember) {
+        System.out.println("m = " + m);
       }
+
       tx.commit();
     } catch (Exception e) {
       tx.rollback();
