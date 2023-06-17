@@ -40,18 +40,28 @@ public class Main {
       em.flush();
       em.clear();
 
-//      String query = "select m from Member m"; // fetch join 사용 전
-      String query = "select distinct t from Team t join fetch t.members"; // fetch join 사용시 -> 팀은 프록시가 아니라 실제 Team을 가져옴!
+      String query = "select m from Member m where m = :member"; // 엔티티 자체를 사용하기 - 엔티티 자체를 사용하여 기본 키 뽑아오게 하기
 
-      List<Team> result = em.createQuery(query, Team.class)
+      Member findMember = em.createQuery(query, Member.class)
+              .setParameter("member", member1)
+              .getSingleResult();
+
+      String query2 = "select m from Member m where m.id = :memberId"; // 기본 키를 사용하기 - 엔티티의 식별자인 기본 키 직접 사용
+
+      Member findMember2 = em.createQuery(query2, Member.class)
+              .setParameter("memberId", member1.getId())
+              .getSingleResult();
+
+      String query3 = "select m from Member m where m.team = :team"; // 외래 키를 사용하기 - 연관관계에 있는 엔티티의 외래 키 사용하여 조인 비슷하게 쓰기
+
+      List<Member> findMember3 = em.createQuery(query3, Member.class)
+              .setParameter("team", teamA)
               .getResultList();
 
-      for(Team t : result) {
-        System.out.println("team = " + t.getName() + " members = " + t.getMembers().size());
-        for (Member member : t.getMembers()) {
-          System.out.println(" -> member = " + member);
-        }
-        // 만약 회원이 100명이라면 최악의 경우 쿼리가 100번이 나갈 것.. N + 1
+      System.out.println("findMember = " + findMember);
+      System.out.println("findMember2 = " + findMember2);
+      for (Member m : findMember3) {
+        System.out.println("findMember3 = " + m.getUsername());
       }
       tx.commit();
     } catch (Exception e) {
