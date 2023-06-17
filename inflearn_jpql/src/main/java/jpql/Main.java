@@ -41,7 +41,7 @@ public class Main {
       em.clear();
 
 //      String query = "select m from Member m"; // fetch join 사용 전
-      String query = "select t from Team t join fetch t.members"; // fetch join 사용시 -> 팀은 프록시가 아니라 실제 Team을 가져옴!
+      String query = "select distinct t from Team t join fetch t.members"; // fetch join 사용시 -> 팀은 프록시가 아니라 실제 Team을 가져옴!
 
       List<Team> result = em.createQuery(query, Team.class)
               .getResultList();
