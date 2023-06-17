@@ -13,31 +13,34 @@ public class Main {
 
     try {
 
-      Team team = new Team();
-      team.setName("teamA");
-      em.persist(team);
-
       Member member = new Member();
-      member.setUsername("member1");
-      member.setAge(10);
+      member.setUsername("관리자1");
       member.setType(MemberType.ADMIN);
       em.persist(member);
 
-      member.setTeam(team);
+      Member member2 = new Member();
+      member2.setUsername("관리자2");
+      member2.setType(MemberType.ADMIN);
+      em.persist(member2);
 
       em.flush();
       em.clear();
 
-//      String query =
-//              "select coalesce(m.username, '이름 없는 회원') from Member m"; // coalesce
-      String query = "select nullif(m.username, '관리자') as username from Member m"; // nullif
+      String query = "select concat('a', 'b') From Member m";
+//      String query = "select substring(m.username, 2, 3) From Member m";
 
-    List<String> result = em.createQuery(query, String.class)
+//      String query = "select size(t.members) from Team t"; // 컬렉션의 크기를 보여줌.
+//      String query = "select index(t.members) from Team t"; // 값 타입 컬렉션에서 컬렉션의 위치 값. 안쓰는게 나음
+
+//      String query = "select locate('de', 'abcdefg') From Member m";
+//      List<Integer> result = em.createQuery(query, Integer.class)
+//                    .getResultList();
+      List<String> result = em.createQuery(query, String.class)
                     .getResultList();
 
-    for(String s : result) {
-      System.out.println("s = " + s);
-    }
+      for(String s : result) {
+        System.out.println("s = " + s);
+      }
       tx.commit();
     } catch (Exception e) {
       tx.rollback();
