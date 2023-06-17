@@ -1,6 +1,7 @@
 package jpql;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 
 public class Main {
@@ -13,33 +14,33 @@ public class Main {
 
     try {
 
+      Team team = new Team();
+      em.persist(team);
+
       Member member = new Member();
       member.setUsername("관리자1");
-      member.setType(MemberType.ADMIN);
+      member.setTeam(team);
       em.persist(member);
 
       Member member2 = new Member();
       member2.setUsername("관리자2");
-      member2.setType(MemberType.ADMIN);
+      member.setTeam(team);
       em.persist(member2);
 
       em.flush();
       em.clear();
 
-      String query = "select concat('a', 'b') From Member m";
-//      String query = "select substring(m.username, 2, 3) From Member m";
+      String query = "select m.username from Member m"; // 경로 표현식 사용 -> 상태 필드 사용
+//      String query = "select m.team From Member m"; // 경로 표현식 사용 시 주의 -> 단일 값 연관 경로 조회 시 묵시적 내부 조인 발생
+      /* String query = "select t.members.username From Team t"; // 경로 표현식 사용 시 주의 -> 컬렉션 값 연관 경로 조회 시 묵시적 내부 조인 발생. 이 코드는 에러발생
+      Collection result = em.createQuery(query, Collection.class).getResultList(); */
+//      String query = "select t.members from Team t join t.members m"; // 명시적 조인을 통한 조회
 
-//      String query = "select size(t.members) from Team t"; // 컬렉션의 크기를 보여줌.
-//      String query = "select index(t.members) from Team t"; // 값 타입 컬렉션에서 컬렉션의 위치 값. 안쓰는게 나음
-
-//      String query = "select locate('de', 'abcdefg') From Member m";
-//      List<Integer> result = em.createQuery(query, Integer.class)
-//                    .getResultList();
-      List<String> result = em.createQuery(query, String.class)
+      List<Team> result = em.createQuery(query, Team.class)
                     .getResultList();
 
-      for(String s : result) {
-        System.out.println("s = " + s);
+      for(Team m : result) {
+        System.out.println("s = " + m);
       }
       tx.commit();
     } catch (Exception e) {
