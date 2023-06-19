@@ -11,7 +11,7 @@ public class Member {
   private Long id;
 
   @Column(length = 10)
-  private String names;
+  private String name;
 
   @Embedded
   private Address address;
@@ -42,11 +42,11 @@ public class Member {
   }
 
   public String getNames() {
-    return names;
+    return name;
   }
 
-  public void setNames(String names) {
-    this.names = names;
+  public void setNames(String name) {
+    this.name = name;
   }
 
   public Address getAddress() {
