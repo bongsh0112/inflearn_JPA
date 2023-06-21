@@ -3,15 +3,19 @@ package jpabook.jpashop.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jpabook.jpashop.domain.Member;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository // Spring Bean으로 등록
+@RequiredArgsConstructor
 public class MemberRepository {
   
-  @PersistenceContext
-  private EntityManager em;
+//  @PersistenceContext
+//  private EntityManager em;
+//  위 방법으로 해도 의존성 주입이 되지만 아래 방법으로 하는게 일관성있다.
+  private final EntityManager em;
   
   public void save(Member member) {
     em.persist(member); // 영속성 컨텍스트에 엔티티를 넣고 나중에 commit 될 때 DB에 저장
