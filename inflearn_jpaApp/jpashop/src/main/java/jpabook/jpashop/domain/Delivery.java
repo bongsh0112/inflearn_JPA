@@ -12,7 +12,7 @@ public class Delivery {
   @Column(name = "delivery_id")
   private Long id;
   
-  @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY, cascade = CascadeType.ALL) // order만이 delivery를 관리한다. 즉, private한 참조자가 있을 때만 cascade를 쓴다.
   private Order order;
   
   @Embedded
