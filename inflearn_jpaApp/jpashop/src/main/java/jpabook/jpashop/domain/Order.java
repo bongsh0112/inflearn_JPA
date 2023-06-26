@@ -30,7 +30,7 @@ public class Order {
   @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // order만이 orderitems를 관리한다. private한 관계에서만 cascade를 쓰기!
   private List<OrderItem> orderItems = new ArrayList<>();
   
-  @OneToOne(fetch = FetchType.LAZY)
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "delivery_id")
   private Delivery delivery;
   
