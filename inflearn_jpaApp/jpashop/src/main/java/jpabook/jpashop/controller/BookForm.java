@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter @Setter
 public class BookForm {
 
-  private Long id;
+  private Long id; // 상품 수정이 있기 때문에 id가 있어야함.
   
   private String name;
   private int price;
