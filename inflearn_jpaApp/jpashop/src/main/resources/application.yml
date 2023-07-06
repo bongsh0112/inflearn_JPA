@@ -22,6 +22,8 @@ spring:
         show_sql: true
         format_sql: true
         default_batch_fetch_size: 1000
+    open-in-view: false
+    ## OSIV On/Off : Off 시에 트랜잭션이 끝나면 영속성 컨텍스트가 끝나기 때문에 프록시 사용 불가 에러 반환!
 
 logging:
   level:

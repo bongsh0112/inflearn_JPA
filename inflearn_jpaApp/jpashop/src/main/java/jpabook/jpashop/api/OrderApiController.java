@@ -1,5 +1,7 @@
 package jpabook.jpashop.api;
 
+import jpabook.jpashop.Service.query.OrderDto;
+import jpabook.jpashop.Service.query.OrderQueryService;
 import jpabook.jpashop.domain.Address;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderItem;
@@ -51,14 +53,11 @@ public class OrderApiController {
     return collect;
   }
   
+  private final OrderQueryService orderQueryService;
+  
   @GetMapping("/api/v3/orders")
-  public List<OrderDto> ordersV3() {
-    List<Order> orders = orderRepository.findAllWithItem();
-    List<OrderDto> collect = orders.stream()
-            .map(o -> new OrderDto(o))
-            .collect(Collectors.toList());
-    
-    return collect;
+  public List<jpabook.jpashop.Service.query.OrderDto> ordersV3() {
+    return orderQueryService.ordersV3(); // OSIV 껐을 때 Service에서 쿼리 조회 사용하기
   }
   
   @GetMapping("api/v3.1/orders")
@@ -91,7 +90,7 @@ public class OrderApiController {
   
   
   @Data
-  static class OrderDto {
+  public static class OrderDto {
     private Long orderId;
     private String name;
     private LocalDateTime orderDate; //주문시간 private OrderStatus orderStatus;
