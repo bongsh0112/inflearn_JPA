@@ -1,26 +1,31 @@
-package jpabook.jpashop.repository.order.simplequery;
+package jpabook.jpashop.repository.order.query;
 
 import jpabook.jpashop.domain.Address;
-import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
-public class OrderSimpleQueryDto { // DTO는 엔티티를 직접 참조해도 상관없음
+public class OrderQueryDto {
+  
   private Long orderId;
   private String name;
   private LocalDateTime orderDate;
-  private OrderStatus orderStatus;
   private Address address;
+  private OrderStatus orderStatus;
+  private List<OrderItemQueryDto> orderItems;
   
-  public OrderSimpleQueryDto(Long orderId, String name, LocalDateTime orderDate, OrderStatus orderStatus, Address address) {
+  
+  public OrderQueryDto() {}
+  
+  public OrderQueryDto(Long orderId, String name, LocalDateTime orderDate, Address address, OrderStatus orderStatus) {
     this.orderId = orderId;
     this.name = name;
     this.orderDate = orderDate;
-    this.orderStatus = orderStatus;
     this.address = address;
+    this.orderStatus = orderStatus;
   }
 }

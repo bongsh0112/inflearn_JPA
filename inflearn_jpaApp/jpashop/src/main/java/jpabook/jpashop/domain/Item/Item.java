@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain.Item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jpabook.jpashop.domain.Category;
 import jpabook.jpashop.exception.NotEnoughStockException;
@@ -22,7 +23,8 @@ public abstract class Item {
   private String name;
   private int price;
   private int stockQuantity;
-  
+
+  // @양방향이지만 JsonIgnore 걸지 않은 이유는 Item과 OrderItem 간의 참조를 만들지 않았기 때문
   @ManyToMany(mappedBy = "items")
   private List<Category> categories = new ArrayList<>();
   

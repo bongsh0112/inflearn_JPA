@@ -1,7 +1,6 @@
-package jpabook.jpashop.repository.simplequery;
+package jpabook.jpashop.repository.order.simplequery;
 
 import jakarta.persistence.EntityManager;
-import jpabook.jpashop.repository.OrderSimpleQueryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -21,4 +20,5 @@ public class OrderSimpleQueryRepository {
                     " join o.delivery d", OrderSimpleQueryDto.class
     ).getResultList();
   }
+  // API 스펙에 매우 fit 한 경우(화면에 매우 fit한 경우)에는 이렇게 빼주는 것이 맞다.
 }
