@@ -47,12 +47,12 @@ public class MemberService {
   }
   
   public Member findOne(Long memberId) {
-    return memberRepository.findOne(memberId);
+    return memberRepository.findById(memberId).get();
   }
   
   @Transactional
   public void update(Long id, String name) {
-    Member member = memberRepository.findOne(id); // 영속성 컨텍스트에 저장 -> member가 영속상태
+    Member member = memberRepository.findById(id).get(); // 영속성 컨텍스트에 저장 -> member가 영속상태
     member.setName(name); // 변경 감지 이용! 영속 상태의 member의 상태 변경 -> commit 시에 영속성컨텍스트 flush하고 DB에 commit
     
   }
