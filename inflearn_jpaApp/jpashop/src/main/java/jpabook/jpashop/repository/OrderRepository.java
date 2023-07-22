@@ -68,6 +68,10 @@ public class OrderRepository {
     return query.getResultList();
   }
   
+//  public List<Order> findAll(OrderSearch orderSearch) {
+//
+//  }
+  
   public List<Order> findAllWithMemberDelivery(int offset, int limit) {
     return em.createQuery( // Order를 조인해도 Member, Delivery가 lazy임에도 order 객체에 member, delivery 값을 모두 채워서 가져와버린다! => 페치 조인!
                     "select o from Order o" +
