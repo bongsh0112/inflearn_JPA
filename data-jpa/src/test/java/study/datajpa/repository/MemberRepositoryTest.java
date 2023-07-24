@@ -12,6 +12,7 @@ import study.datajpa.entity.Team;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -138,5 +139,32 @@ class MemberRepositoryTest {
     for (Member member : result) {
       System.out.println("s = " + member);
     }
+  }
+  
+  @Test
+  public void returnTypeTest() throws Exception {
+    Member m1 = new Member("AAA", 10);
+    Member m2 = new Member("BBB", 20);
+    
+    memberRepository.save(m1);
+    memberRepository.save(m2);
+    
+    List<Member> aaa = memberRepository.findListByUsername("AAA");
+    Member bbb = memberRepository.findMemberByUsername("AAA");
+    Optional<Member> ccc = memberRepository.findOptionalByUsername("AAA"); // 밑의 문제를 해결하기 위한 Optional!
+    // 만약 m1, m2의 이름이 모두 AAA 라면 여기도 Exception이 터졌을 것!
+    // 단건 조회에서 여러개의 결과를 반환하게 되면 NonUniqueResultException(JPA 오류) -> IncorrectResultSizeDataAccessException(Spring 오류)으로 변환해서 보여준다
+    
+    /**
+     *  참고: 단건으로 지정한 메서드를 호출하면 스프링 데이터 JPA는 내부에서 JPQL의 Query.getSingleResult() 메서드를 호출한다.
+     *  이 메서드를 호출했을 때 조회 결과가 없으면 javax.persistence.NoResultException 예외가 발생하는데 개발자 입장에서 다루기가 상당히 불편하다.
+     *  스프링 데이터 JPA는 단건을 조회할 때 이 예외가 발생하면 예외를 무시하고 대신에 null 을 반환한다.
+     *  컬렉션
+     *    결과 없음: 빈 컬렉션 반환
+     *  단건 조회
+     *    결과 없음: null 반환
+     *    결과가 2건 이상: javax.persistence.NonUniqueResultException 예외 발생
+     */
+    
   }
 }
