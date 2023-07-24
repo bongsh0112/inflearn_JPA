@@ -4,6 +4,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.dto.MemberDTO;
@@ -165,6 +169,49 @@ class MemberRepositoryTest {
      *    결과 없음: null 반환
      *    결과가 2건 이상: javax.persistence.NonUniqueResultException 예외 발생
      */
+    
+  }
+  
+  @Test
+  public void paging() throws Exception {
+    //given
+    memberRepository.save(new Member("member1", 10));
+    memberRepository.save(new Member("member2", 10));
+    memberRepository.save(new Member("member3", 10));
+    memberRepository.save(new Member("member4", 10));
+    memberRepository.save(new Member("member5", 10));
+    
+    int age = 10;
+    PageRequest pageRequest = PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "username"));
+    // PageRequest : Pageable 인터페이스의 구현체중 하나. 주로 이걸 많이 쓴다.
+    
+    //when
+    Page<Member> page = memberRepository.findByAge(age, pageRequest); // Page 타입에는 totalCount도 count 쿼리를 날리기 때문에 같이 가져온다.
+    Page<MemberDTO> toMap = page.map(member -> new MemberDTO(member.getId(), member.getUsername(), null));
+    // 엔티티를 그대로 반환(Member로)하기보다는 DTO로 감싸서 보내기! map을 써서 가능하다.
+    
+    Slice<Member> page2 = memberRepository.findSliceByAge(age, pageRequest);
+    
+    //then
+    List<Member> content = page.getContent();
+    long totalElements = page.getTotalElements();
+    
+    for (Member member : content) {
+      System.out.println("member = " + member);
+    }
+    System.out.println("totalElements = " + totalElements);
+    
+    assertThat(content.size()).isEqualTo(3);
+    assertThat(page.getTotalElements()).isEqualTo(5);
+    assertThat(page.getNumber()).isEqualTo(0);
+    assertThat(page.getTotalPages()).isEqualTo(2);
+    assertThat(page.isFirst()).isTrue();
+    assertThat(page.hasNext()).isTrue();
+    
+    assertThat(content.size()).isEqualTo(3);
+    assertThat(page2.getNumber()).isEqualTo(0);
+    assertThat(page2.isFirst()).isTrue();
+    assertThat(page2.hasNext()).isTrue();
     
   }
 }
