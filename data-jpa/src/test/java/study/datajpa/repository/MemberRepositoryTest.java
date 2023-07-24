@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+import study.datajpa.dto.MemberDTO;
 import study.datajpa.entity.Member;
+import study.datajpa.entity.Team;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
@@ -20,6 +23,9 @@ class MemberRepositoryTest {
   
   @Autowired
   MemberRepository memberRepository; // 인터페이스만 해놓으면 구현체는 spring data jpa가 알아서 만들어서 주입해준다
+  
+  @Autowired
+  TeamRepository teamRepository;
   
   @Test
   public void testMember() {
@@ -58,5 +64,79 @@ class MemberRepositoryTest {
     long deletedCount = memberRepository.count();
     assertThat(deletedCount).isEqualTo(0);
       //then
+  }
+  
+  @Test
+  public void findTest() throws Exception {
+    //given
+    Member m1 = new Member("AAA", 10);
+    Member m2 = new Member("AAA", 20);
+    //when
+    memberRepository.save(m1);
+    memberRepository.save(m2);
+    //then
+    List<Member> result = memberRepository.findByUsernameAndAgeGreaterThan("AAA", 15);
+    
+    assertThat(result.get(0).getUsername()).isEqualTo("AAA");
+    assertThat(result.get(0).getAge()).isEqualTo(20);
+  }
+  
+  @Test
+  public void queryTest() throws Exception {
+    //given
+    Member m1 = new Member("AAA", 10);
+    Member m2 = new Member("AAA", 20);
+    //when
+    memberRepository.save(m1);
+    memberRepository.save(m2);
+    //then
+    List<Member> result = memberRepository.findMember("AAA", 15);
+    
+    assertThat(result.get(0).getUsername()).isEqualTo("AAA");
+    assertThat(result.get(0).getAge()).isEqualTo(20);
+  }
+  
+  @Test
+  public void findUSernameListtest() throws Exception {
+    
+    Member m1 = new Member("AAA", 10);
+    Member m2 = new Member("BBB", 20);
+    
+    memberRepository.save(m1);
+    memberRepository.save(m2);
+    
+    List<String> usernameList = memberRepository.findUsernameList();
+    for (String s : usernameList) {
+      System.out.println("s = " + s);
+    }
+  }
+  
+  @Test
+  public void findMemberDTO() throws Exception {
+    
+    Team team = new Team("teamA");
+    teamRepository.save(team);
+    
+    Member m1 = new Member("AAA", 10);
+    memberRepository.save(m1);
+    
+    List<MemberDTO> memberDTOList = memberRepository.findMemberDTO();
+    for (MemberDTO dto : memberDTOList) {
+      System.out.println("dto = " + dto);
+    }
+  }
+  
+  @Test
+  public void findByNamesTest() throws Exception {
+    Member m1 = new Member("AAA", 10);
+    Member m2 = new Member("BBB", 20);
+    
+    memberRepository.save(m1);
+    memberRepository.save(m2);
+    
+    List<Member> result = memberRepository.findByNames(Arrays.asList("AAA", "BBB"));
+    for (Member member : result) {
+      System.out.println("s = " + member);
+    }
   }
 }

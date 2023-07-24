@@ -47,4 +47,13 @@ public class MemberTest {
       System.out.println("-> Member.team = " + member.getTeam());
     }
   }
+  
+  @Test
+  public void test() throws Exception {
+      //given
+      
+      //when
+      
+      //then
+  }
 }
