@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MemberRepositoryTest {
   
   @Autowired
-  MemberRepository memberRepository;
+  MemberRepository memberRepository; // 인터페이스만 해놓으면 구현체는 spring data jpa가 알아서 만들어서 주입해준다
   
   @Test
   public void testMember() {
