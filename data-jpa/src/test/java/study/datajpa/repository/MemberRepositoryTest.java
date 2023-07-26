@@ -1,5 +1,7 @@
 package study.datajpa.repository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ class MemberRepositoryTest {
   
   @Autowired
   TeamRepository teamRepository;
+  
+  @PersistenceContext
+  EntityManager em;
   
   @Test
   public void testMember() {
@@ -213,5 +218,29 @@ class MemberRepositoryTest {
     assertThat(page2.isFirst()).isTrue();
     assertThat(page2.hasNext()).isTrue();
     
+  }
+  
+  @Test
+  public void bulkUpdate() {
+    //given
+    memberRepository.save(new Member("member1", 10));
+    memberRepository.save(new Member("member2", 19));
+    memberRepository.save(new Member("member3", 20));
+    memberRepository.save(new Member("member4", 21));
+    memberRepository.save(new Member("member5", 40));
+    
+    //when
+    int resultCount = memberRepository.bulkAgePlus(20);
+//    em.clear();
+//    clear를 해줘야 영속성 컨텍스트에도 반영된다.
+//    -> 우선 bulk 연산을 하고 DB에 반영시킨 후, 영속성 컨텍스트를 강제로 비워서 다음에 찾아올 때 DB에서 끌어와 영속성 컨텍스트에 저장한 뒤 찾아오도록 한다.
+    
+    List<Member> members = memberRepository.findListByUsername("member5");
+    Member member5 = members.get(0);
+    System.out.println("member5 = " + member5); // 40살로 나온다.
+    // 벌크 연산은 영속성 컨텍스트를 무시하고 DB에 쿼리를 날려버리기 때문에 save에서 persist 된 것만 찾아올 수 있다.
+    
+    //then
+    assertThat(resultCount).isEqualTo(3);
   }
 }
